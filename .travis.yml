@@ -1,0 +1,35 @@
+dist: xenial
+language: python
+sudo: false
+python:
+- "2.7"
+- "3.5"
+- "3.6"
+- "3.7"
+- "3.8-dev"
+- pypy
+- pypy3
+env:
+- CLICK_VERSION=7.0
+- CLICK_VERSION=6.7
+- CLICK_VERSION=6.6
+- CLICK_VERSION=6.4
+- CLICK_VERSION=6.3
+- CLICK_VERSION=6.2
+- CLICK_VERSION=6.1
+- CLICK_VERSION=6.0
+- CLICK_VERSION=5.1
+- CLICK_VERSION=5.0
+- CLICK_VERSION=4.1
+- CLICK_VERSION=4.0
+install:
+- pip install click==$CLICK_VERSION
+- pip install -e .
+- pip install flake8 flake8-import-order pytest-cov coveralls
+script:
+- | # flake8
+  flake8 click_default_group.py test.py setup.py -v --show-source
+- | # pytest
+  py.test -v --cov=click_default_group --cov-report=term-missing
+after_success:
+- coveralls
